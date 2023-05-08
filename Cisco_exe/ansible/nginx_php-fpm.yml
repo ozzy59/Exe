@@ -1,0 +1,8 @@
+---
+- hosts: web-server
+  become: true
+  tasks:
+    - name: Install Nginx and PHP-FPM
+      dnf:
+        name: ['nginx', 'php-fpm']
+        state: present
