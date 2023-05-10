@@ -1,0 +1,1 @@
+web-server ansible_host=ec2-3-127-147-199.eu-central-1.compute.amazonaws.com     ansible_connection=ssh        ansible_user=ec2-user

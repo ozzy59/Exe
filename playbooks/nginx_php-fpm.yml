@@ -1,0 +1,25 @@
+---
+- name: Install and configure Nginx and PHP-FPM
+  hosts: web-server
+  become: true
+  tasks:
+    - name: Install Nginx and PHP-FPM
+      dnf:
+        name: ['nginx', 'php-fpm']
+        state: present
+    - name: Start and enable Nginx
+      service:
+        name: 'nginx'
+        state: started
+        enabled: yes
+    - name: Start and enable PHP-FPM
+      service:
+        name: 'php-fpm'
+        state: started
+        enabled: yes
+    - name: Configure nginx
+      copy:
+        src: '/home/sokar/Pulpit/Cisco_exe/ansible/info.php'
+        dest: '/usr/share/nginx/html/info.php'
+
+      
