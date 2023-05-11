@@ -7,19 +7,30 @@
       dnf:
         name: ['nginx', 'php-fpm']
         state: present
-    - name: Start and enable Nginx
-      service:
-        name: 'nginx'
-        state: started
-        enabled: yes
-    - name: Start and enable PHP-FPM
-      service:
-        name: 'php-fpm'
-        state: started
-        enabled: yes
-    - name: Configure nginx
+    - name: Copy config files
       copy:
-        src: '/home/sokar/Pulpit/Exe/playbooks/info.php'
-        dest: '/usr/share/nginx/html/info.php'
-
-      
+        src: '{{ item.src }}'
+        dest: '{{ item.dest }}'
+      loop:
+        - src: /home/sokar/Pulpit/Exe/playbooks/info.php
+          dest: /usr/share/nginx/html/info.php
+        - src: /home/sokar/Pulpit/Exe/playbooks/dev.service
+          dest: /etc/systemd/system/dev.service
+        - src: /home/sokar/Pulpit/Exe/playbooks/dev.timer
+          dest: /etc/systemd/system/dev.timer
+        - src: /home/sokar/Pulpit/Exe/playbooks/echo_script.sh
+          dest: /home/ec2-user/echo_script.sh
+    - name: Make script executable
+      file:
+        path: /home/ec2-user/echo_script.sh
+        mode: '0755'
+    - name: Start services
+      service:
+        name: '{{ item.name }}'
+        state: started
+        enabled: yes
+      loop:
+        - name: nginx
+        - name: php-fpm
+        - name: dev.service
+        - name: dev.timer

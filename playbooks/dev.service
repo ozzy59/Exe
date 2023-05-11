@@ -1,0 +1,7 @@
+[Unit]
+Description=Run script every minute
+
+[Service]
+Type=simple
+ExecStart=/home/ec2-user/echo_script.sh
+TimeoutStartSec=0
