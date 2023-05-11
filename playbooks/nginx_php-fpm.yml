@@ -19,7 +19,7 @@
         enabled: yes
     - name: Configure nginx
       copy:
-        src: '/home/sokar/Pulpit/Cisco_exe/ansible/info.php'
+        src: '/home/sokar/Pulpit/Exe/playbooks/info.php'
         dest: '/usr/share/nginx/html/info.php'
 
       
